@@ -118,6 +118,7 @@ function jstDataTable() {
                 el.id = oRowOptions.id;
                 el.name = oRowOptions.name;
                 el.value = oRowOptions.value;
+                el.checked = oRowOptions.checked;
 
                 domTbleCell.appendChild(el);
                 domTbleRow.appendChild(domTbleCell);
