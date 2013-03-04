@@ -1,0 +1,268 @@
+<html>
+  <head>
+    <title>JST Data Grid (Just a pure JavaScript Data Table)</title>
+    <style type="text/css"> 
+    .datatable {
+        border:1px solid #000000;
+        width:200px;
+    }
+    .
+    datatable tbody td {
+        border:1px solid #000000;
+        text-align: center;
+    }
+    
+    .datatable th {
+        background:#cccccc;
+        border:1px solid #000000;
+        padding: 5px;
+    }
+    
+    .selectinput {
+        text-align: center;
+    }
+    </style>
+  </head>
+  <body>
+      <div id="divToolBar">
+          <form>
+              <fieldset>
+                  <legend>Commands</legend> <span>
+                      <select id="selCircles">
+                          <option value="NULL">Select A Circle</option>
+                          <option value="friends">Friends</option>
+                          <option value="family">Family</option>
+                      </select>
+                  </span>| 
+                  <input type="button" id="btnLoadGrid" name="btnLoadGrid" value="Load Grid" />
+                  </span>
+  
+              </fieldset>
+          </form>
+      </div>
+      <div id="divDataGrid">
+          <fieldset>
+              <legend>Simple Data Grid</legend>
+              <div id="divDataTable" style="margin: 10px; width: 100%;"></div>
+          </fieldset>
+      </div>
+  </body>
+  <script>
+  // Set Refrence To Utilized DOM Elements
+  var elCircles = document.getElementById('selCircles');
+  var elLoadButton = document.getElementById('btnLoadGrid');
+  var elDataTable = document.getElementById('divDataTable');
+  
+  // Define json data structure and fill with tempary data
+  jsonData = {
+      "description" : "Circles JSON Schema",
+      "type" : "object",
+      "properties" : {
+          "friends" : [           
+              ["jon_1","doe_1",{"id":"1","name":"1","style":"","value":"friends::1"}],
+              ["jon_2","doe_2",{"id":"2","name":"2","style":"","value":"friends::2"}],
+              ["jon_3","doe_3",{"id":"3","name":"3","style":"","value":"friends::3"}],
+              ["jon_4","doe_4",{"id":"4","name":"4","style":"","value":"friends::4"}]
+          ],
+          "family" : [
+              ["jon_5","doe_5",{"id":"5","name":"1","style":"","value":"family::1"}],
+              ["jon_6","doe_6",{"id":"6","name":"2","style":"","value":"family::2"}],
+              ["jon_7","doe_7",{"id":"7","name":"3","style":"","value":"family::3"}],
+              ["jon_8","doe_8",{"id":"8","name":"4","style":"","value":"family::4"}]            
+          ]
+      }
+  };           
+  
+  // Parse json data into javascript array of row objects
+  try {
+      var oData = JSON.parse(JSON.stringify(jsonData));
+  } catch (e) {
+      console.log(e);
+  }
+  
+  /** @constructor */
+  function jstDataTable() {
+      /** Debug Mode. */
+      this.debug = false;
+      /** Main data grid table. */
+      this.domTble = document.createElement('table');
+      /** Main data grid table body. */
+      this.domTbleBody = document.createElement('tbody');
+      /** Main data grid table body head. */
+      this.domTbleHead = document.createElement('thead');
+      /** Main data grid table head/cell items. */
+      this.aryTbleHeadItems = [];
+      /** Main data grid table body rows. */
+      this.aryTbleRows = [];
+      /** Multi-Select Options. */
+      this.multiSelectOpt = "";
+      /** Multiselect Mode. */
+      this.multiSelectEnabled = false;
+  
+      /** Add data grid table head items/cells. */
+      this.addHeadItem = function (strItem) {
+          if (this.debug) console.log('EVENT: addHeadItem');
+          if (this.debug) console.log(strItem);
+          
+          this.aryTbleHeadItems.push(strItem);
+      };
+  
+      /** Add data grid table body rows. */
+      this.addRow = function (aryRow) {
+          if (this.debug) console.log('EVENT: addRow');
+          if (this.debug) console.log(aryRow);
+              
+          this.aryTbleRows.push(aryRow);
+      };
+  
+      /** Set data grid table Id. */
+      this.setTableId = function (strId) {
+          if (this.debug) console.log('EVENT: setTableId');
+          if (this.debug) console.log(strId);
+          
+          this.domTble.id = strId;
+      };
+  
+      /** Set data grid table name. */
+      this.setTableName = function (strName) {
+          if (this.debug) console.log('EVENT: setTableName');
+          if (this.debug) console.log(strName);
+          
+          this.domTble.name = strName;
+      };
+  
+      /** Set data grid tabke css class name. */
+      this.setTableClassName = function (strClassName) {
+          if (this.debug) console.log('EVENT: setTableClassName');
+          if (this.debug) console.log(strClassName);
+          
+          this.domTble.className = strClassName;
+      };
+  
+      /** Set data grid multi-select. */
+      this.multiSelectEnabled = function (enabled) {
+          if (this.debug) console.log('EVENT: enableMultiSelect');
+          if (this.debug) console.log(enabled);
+          
+          this.multiSelectOpt = enabled;
+          this.multiSelectEnabled = true;
+      };
+  
+      /** Set data grid debug. */
+      this.enableDebug = function () {
+          if (this.debug) console.log('EVENT: enableDebug');
+          
+          this.debug = true;
+          
+          if (this.debug) console.log(this.debug);
+      };
+  
+      /** Create data grid. */
+      this.createDataTable = function (strApplyTo) {
+          if (this.debug) console.log('EVENT: createDataTable');
+  
+          // Build Table Head
+          var domTbleHeadRow = document.createElement('tr');
+          var domTbleHeadCell = document.createElement('th');
+  
+          if (this.multiSelectEnabled) {
+              if (this.debug) console.log('NOTICE: Multiple Selected Enabled');
+  
+              domTbleHeadCell.appendChild(document.createTextNode(this.multiSelectOpt.colTitle));
+              domTbleHeadRow.appendChild(domTbleHeadCell);
+          }
+          
+          for (var item in this.aryTbleHeadItems) {
+              domTbleHeadCell = document.createElement('th');
+              domTbleHeadCell.appendChild(document.createTextNode(this.aryTbleHeadItems[item]));
+              domTbleHeadRow.appendChild(domTbleHeadCell);
+          }
+          
+          this.domTbleHead.appendChild(domTbleHeadRow);
+                  
+          // Build Table Body Rows
+          for (var kItem in this.aryTbleRows) {
+              var domTbleCell = document.createElement('td');
+              // Do not pass rows array by refrence
+              var aryRow = this.aryTbleRows[kItem].slice(0); 
+              // If aryRow was passed by refrence this would eat the row cells and cause a bug!
+              var oRowOptions = aryRow.pop();
+                         
+              domTbleRow = document.createElement('tr');
+              
+              if (this.multiSelectEnabled) {
+                  domTbleCell = document.createElement('td');
+                  domTbleCell.className = this.multiSelectOpt.className;
+  
+                  var el = document.createElement('input');
+                  
+                  el.type = "checkbox";
+                  el.id = oRowOptions.id;
+                  el.name = oRowOptions.name;
+                  el.value = oRowOptions.value;
+  
+                  domTbleCell.appendChild(el);
+                  domTbleRow.appendChild(domTbleCell);
+              }
+              
+              for (var itemKey in aryRow) {
+                  domTbleCell = document.createElement('td');
+                  domTbleCell.appendChild(document.createTextNode(aryRow[itemKey]));
+                  domTbleRow.appendChild(domTbleCell);
+              }
+  
+              this.domTbleBody.appendChild(domTbleRow);
+          }
+  
+          // Construct Table
+          this.domTble.appendChild(this.domTbleHead);
+          this.domTble.appendChild(this.domTbleBody);
+  
+          // Append Table to Element
+          elDataTable.appendChild(this.domTble);
+      };
+  }
+  
+  function loadData() {   
+      var oJSTDataTble = new jstDataTable();
+      var strCirclesValue = elCircles.options[elCircles.selectedIndex].value;
+  
+      // Enable Debugging
+      oJSTDataTble.enableDebug();
+  
+      // MultiSelect Options
+      var oOptMultiSelect = {
+          colTitle: "Select",
+          className: "selectinput"
+      };
+  
+      //oJSTDataTble.enableInput("checkbox", "Select");
+      oJSTDataTble.multiSelectEnabled(oOptMultiSelect);
+  
+      // Set Table Attributes
+      oJSTDataTble.setTableId("data");
+      oJSTDataTble.setTableName("data");
+      oJSTDataTble.setTableClassName("datatable");
+  
+      // Create Table Header Row
+      oJSTDataTble.addHeadItem("First Name");
+      oJSTDataTble.addHeadItem("Last Name");
+          
+      // Create Table Body Rows
+      for (var kRow in oData.properties[strCirclesValue]) {
+          oJSTDataTble.addRow(oData.properties[strCirclesValue][kRow]);
+      }
+  
+      oJSTDataTble.createDataTable("queueList");
+  }
+  
+  elLoadButton.addEventListener("click", function () {
+      console.log('EVENT: elLoadButton.addEventListener()');
+      
+      // Clear elDataList <DIV>
+      elDataTable.innerHTML = "";
+  
+      loadData();
+  });
+  </script>
+</html>
