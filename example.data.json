@@ -1,0 +1,18 @@
+jsonData = {
+    "description" : "Circles JSON Schema",
+    "type" : "object",
+    "properties" : {
+        "friends" : [           
+            ["jon_1","doe_1",{"id":"1","name":"1","style":"","value":"friends::1"}],
+            ["jon_2","doe_2",{"id":"2","name":"2","style":"","value":"friends::2"}],
+            ["jon_3","doe_3",{"id":"3","name":"3","style":"","value":"friends::3"}],
+            ["jon_4","doe_4",{"id":"4","name":"4","style":"","value":"friends::4"}]
+        ],
+        "family" : [
+            ["jon_5","doe_5",{"id":"5","name":"1","style":"","value":"family::1"}],
+            ["jon_6","doe_6",{"id":"6","name":"2","style":"","value":"family::2"}],
+            ["jon_7","doe_7",{"id":"7","name":"3","style":"","value":"family::3"}],
+            ["jon_8","doe_8",{"id":"8","name":"4","style":"","value":"family::4"}]            
+        ]
+    }
+};
