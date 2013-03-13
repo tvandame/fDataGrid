@@ -18,7 +18,7 @@ function mDataGrid() {
     this.domTblHead = document.createElement('thead');
 
     /** Main data grid table footer */
-    this.domTblFooter = document.createElement('tfooter');
+    this.domTblFooter = document.createElement('tfoot');
 
     /** Main data grid table head/cell items. */
     this.aryTblHeadItems = [];
@@ -149,9 +149,7 @@ function mDataGrid() {
 	    console.log('EVENT: createDataTable');
 
 	var domTblHeadRow = document.createElement('tr');
-	var domTblFooterRow = document.createElement('tr');	
 	var domTblHeadCell = document.createElement('th');
-	var domTblFooterCell = document.createElement('td');
 
 	if (this.multiSelectEnabled) {
 	    if (this.debug)
@@ -159,19 +157,15 @@ function mDataGrid() {
 
 	    domTblHeadCell.appendChild(document.createTextNode(this.multiSelectOpt.colTitle));
 	    domTblHeadRow.appendChild(domTblHeadCell);
-	    domTblFooterRow.appendChild(domTblFooterCell);
 	}
 
 	for (var item in this.aryTblHeadItems) {
 	    domTblHeadCell = document.createElement('th');
-	    domTblFooterCell = document.createElement('td');
 	    domTblHeadCell.appendChild(document.createTextNode(this.aryTblHeadItems[item]));
 	    domTblHeadRow.appendChild(domTblHeadCell);
-	    domTblFooterRow.appendChild(domTblFooterCell);
 	}
 
 	this.domTblHead.appendChild(domTblHeadRow);
-	this.domTblFooter.appendChild(domTblFooterRow);
 
 	// Build Table Body Rows
 	for (var kItem in this.aryTblRows) {
@@ -208,9 +202,25 @@ function mDataGrid() {
 	    this.domTblBody.appendChild(domTblRow);
 	}
 
-	// Construct Table
+	// Construct Table Header
 	this.domTbl.appendChild(this.domTblHead);
+	// Construct Table Footer
 	this.domTbl.appendChild(this.domTblBody);
+
+	// Construct Table Footer
+	var domTblFooterRow = document.createElement('tr');	
+	var domTblFooterCell = document.createElement('td');
+	   	   
+	if (this.multiSelectEnabled) {
+	    domTblFooterCell.colSpan = this.aryTblHeadItems.length +1;
+	} else {
+	    domTblFooterCell.colSpan = this.aryTblHeadItems.length;
+	}
+
+	domTblFooterCell.appendChild(document.createTextNode('Count: ' + this.aryTblRows.length));
+	domTblFooterRow.appendChild(domTblFooterCell);
+
+	this.domTblFooter.appendChild(domTblFooterRow);
 	this.domTbl.appendChild(this.domTblFooter);
 
 	// Append Table to Element

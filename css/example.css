@@ -25,6 +25,11 @@ root {
     text-align: center;
 }
 
+.datatable tfoot tr {
+    background: #cccccc;
+    text-align:  right;
+}
+
 .selectinput {
     text-align: center;
 }
