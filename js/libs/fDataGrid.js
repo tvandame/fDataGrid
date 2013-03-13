@@ -1,35 +1,89 @@
-/** @constructor */
+/*
+ * fDataGrid.js v0.0.0
+ *
+ * Copyright (c) 2013-2013 - Travis J. VanDame
+ * 
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without
+ * restriction, including without limitation the rights to use,
+ * copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following
+ * conditions:
+ * 
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+/**
+ * 
+ * @returns {mDataGrid}
+ */
 function mDataGrid() {
 
     /**
-     * Debug Mode.
      * 
      * @type Boolean|Boolean
      */
     this.debug = false;
 
-    /** Main data grid table. */
+    /**
+     * 
+     * @type @exp;document@call;createElement
+     */
     this.domTbl = document.createElement('table');
 
-    /** Main data grid table body. */
+    /**
+     * 
+     * @type @exp;document@call;createElement
+     */
     this.domTblBody = document.createElement('tbody');
 
-    /** Main data grid table body head. */
+    /**
+     * 
+     * @type @exp;document@call;createElement
+     */
     this.domTblHead = document.createElement('thead');
 
-    /** Main data grid table footer */
+    /**
+     * 
+     * @type @exp;document@call;createElement
+     */
     this.domTblFooter = document.createElement('tfoot');
 
-    /** Main data grid table head/cell items. */
+    /**
+     * 
+     * @type Array
+     */
     this.aryTblHeadItems = [];
 
-    /** Main data grid table body rows. */
+    /**
+     * 
+     * @type Array
+     */
     this.aryTblRows = [];
 
-    /** Multi-Select Options. */
+    /**
+     * 
+     * @type String|type
+     */
     this.multiSelectOpt = "";
 
-    /** Multiselect Mode. */
+    /**
+     * 
+     * @param {type} enabled
+     * @returns {undefined}
+     */
     this.multiSelectEnabled = false;
 
     /**
