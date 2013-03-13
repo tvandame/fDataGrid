@@ -167,39 +167,58 @@ function mDataGrid() {
 
 	this.domTblHead.appendChild(domTblHeadRow);
 
-	// Build Table Body Rows
-	for (var kItem in this.aryTblRows) {
-	    var domTblCell = document.createElement('td');
-	    // Do not pass rows array by refrence
-	    var aryRow = this.aryTblRows[kItem].slice(0);
-	    // If aryRow was passed by refrence this would eat the row cells and cause a bug!
-	    var oRowOptions = aryRow.pop();
-
-	    domTblRow = document.createElement('tr');
+	if (!this.aryTblRows.length > 0) {
+	    var domTblFooterRow = document.createElement('tr');
+	    var domTblFooterCell = document.createElement('td');
 
 	    if (this.multiSelectEnabled) {
-		domTblCell = document.createElement('td');
-		domTblCell.className = this.multiSelectOpt.className;
-
-		var el = document.createElement('input');
-
-		el.type = "checkbox";
-		el.id = oRowOptions.id;
-		el.name = oRowOptions.name;
-		el.value = oRowOptions.value;
-		el.checked = oRowOptions.checked;
-
-		domTblCell.appendChild(el);
-		domTblRow.appendChild(domTblCell);
+		domTblFooterCell.colSpan = this.aryTblHeadItems.length + 1;
+	    } else {
+		domTblFooterCell.colSpan = this.aryTblHeadItems.length;
 	    }
 
-	    for (var itemKey in aryRow) {
-		domTblCell = document.createElement('td');
-		domTblCell.appendChild(document.createTextNode(aryRow[itemKey]));
-		domTblRow.appendChild(domTblCell);
+	    domTblFooterCell.appendChild(document.createTextNode('Empty Result'));
+	    domTblFooterRow.appendChild(domTblFooterCell);
+
+	    this.domTblFooter.appendChild(domTblFooterRow);
+	    this.domTbl.appendChild(this.domTblFooter);
+	} else {
+
+	    // Build Table Body Rows
+	    for (var kItem in this.aryTblRows) {
+		var domTblCell = document.createElement('td');
+		// Do not pass rows array by refrence
+		var aryRow = this.aryTblRows[kItem].slice(0);
+		// If aryRow was passed by refrence this would eat the row cells and cause a bug!
+		var oRowOptions = aryRow.pop();
+
+		domTblRow = document.createElement('tr');
+
+		if (this.multiSelectEnabled) {
+		    domTblCell = document.createElement('td');
+		    domTblCell.className = this.multiSelectOpt.className;
+
+		    var el = document.createElement('input');
+
+		    el.type = "checkbox";
+		    el.id = oRowOptions.id;
+		    el.name = oRowOptions.name;
+		    el.value = oRowOptions.value;
+		    el.checked = oRowOptions.checked;
+
+		    domTblCell.appendChild(el);
+		    domTblRow.appendChild(domTblCell);
+		}
+
+		for (var itemKey in aryRow) {
+		    domTblCell = document.createElement('td');
+		    domTblCell.appendChild(document.createTextNode(aryRow[itemKey]));
+		    domTblRow.appendChild(domTblCell);
+		}
+
+		this.domTblBody.appendChild(domTblRow);
 	    }
 
-	    this.domTblBody.appendChild(domTblRow);
 	}
 
 	// Construct Table Header
@@ -208,11 +227,11 @@ function mDataGrid() {
 	this.domTbl.appendChild(this.domTblBody);
 
 	// Construct Table Footer
-	var domTblFooterRow = document.createElement('tr');	
+	var domTblFooterRow = document.createElement('tr');
 	var domTblFooterCell = document.createElement('td');
-	   	   
+
 	if (this.multiSelectEnabled) {
-	    domTblFooterCell.colSpan = this.aryTblHeadItems.length +1;
+	    domTblFooterCell.colSpan = this.aryTblHeadItems.length + 1;
 	} else {
 	    domTblFooterCell.colSpan = this.aryTblHeadItems.length;
 	}
