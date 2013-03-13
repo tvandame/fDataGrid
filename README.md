@@ -1,6 +1,4 @@
-mDataGrid
+fDataGrid
 ===========
 
-Module Data Grid (Just A Simple Pure JavaScript Data Grid Module)
-
-jsFiddle Demo: http://jsfiddle.net/tvandame/Jh7HQ/
+Simple Data Grid (Simple Pure JavaScript Data Grid Module)
