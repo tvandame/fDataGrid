@@ -7,15 +7,15 @@ function mDataGrid() {
      */
     this.debug = false;
     /** Main data grid table. */
-    this.domTble = document.createElement('table');
+    this.domTbl = document.createElement('table');
     /** Main data grid table body. */
-    this.domTbleBody = document.createElement('tbody');
+    this.domTblBody = document.createElement('tbody');
     /** Main data grid table body head. */
-    this.domTbleHead = document.createElement('thead');
+    this.domTblHead = document.createElement('thead');
     /** Main data grid table head/cell items. */
-    this.aryTbleHeadItems = [];
+    this.aryTblHeadItems = [];
     /** Main data grid table body rows. */
-    this.aryTbleRows = [];
+    this.aryTblRows = [];
     /** Multi-Select Options. */
     this.multiSelectOpt = "";
     /** Multiselect Mode. */
@@ -33,7 +33,7 @@ function mDataGrid() {
         if (this.debug)
             console.log(strItem);
 
-        this.aryTbleHeadItems.push(strItem);
+        this.aryTblHeadItems.push(strItem);
     };
 
     /**
@@ -48,7 +48,7 @@ function mDataGrid() {
         if (this.debug)
             console.log(aryRow);
 
-        this.aryTbleRows.push(aryRow);
+        this.aryTblRows.push(aryRow);
     };
 
     /**
@@ -63,7 +63,7 @@ function mDataGrid() {
         if (this.debug)
             console.log(strId);
 
-        this.domTble.id = strId;
+        this.domTbl.id = strId;
     };
 
     /**
@@ -78,7 +78,7 @@ function mDataGrid() {
         if (this.debug)
             console.log(strName);
 
-        this.domTble.name = strName;
+        this.domTbl.name = strName;
     };
 
     /**
@@ -93,7 +93,7 @@ function mDataGrid() {
         if (this.debug)
             console.log(strClassName);
 
-        this.domTble.className = strClassName;
+        this.domTbl.className = strClassName;
     };
 
     /**
@@ -138,38 +138,38 @@ function mDataGrid() {
             console.log('EVENT: createDataTable');
 
         // Build Table Head
-        var domTbleHeadRow = document.createElement('tr');
-        var domTbleHeadCell = document.createElement('th');
+        var domTblHeadRow = document.createElement('tr');
+        var domTblHeadCell = document.createElement('th');
 
         if (this.multiSelectEnabled) {
             if (this.debug)
                 console.log('NOTICE: Multiple Selected Enabled');
 
-            domTbleHeadCell.appendChild(document.createTextNode(this.multiSelectOpt.colTitle));
-            domTbleHeadRow.appendChild(domTbleHeadCell);
+            domTblHeadCell.appendChild(document.createTextNode(this.multiSelectOpt.colTitle));
+            domTblHeadRow.appendChild(domTblHeadCell);
         }
 
-        for (var item in this.aryTbleHeadItems) {
-            domTbleHeadCell = document.createElement('th');
-            domTbleHeadCell.appendChild(document.createTextNode(this.aryTbleHeadItems[item]));
-            domTbleHeadRow.appendChild(domTbleHeadCell);
+        for (var item in this.aryTblHeadItems) {
+            domTblHeadCell = document.createElement('th');
+            domTblHeadCell.appendChild(document.createTextNode(this.aryTblHeadItems[item]));
+            domTblHeadRow.appendChild(domTblHeadCell);
         }
 
-        this.domTbleHead.appendChild(domTbleHeadRow);
+        this.domTblHead.appendChild(domTblHeadRow);
 
         // Build Table Body Rows
-        for (var kItem in this.aryTbleRows) {
-            var domTbleCell = document.createElement('td');
+        for (var kItem in this.aryTblRows) {
+            var domTblCell = document.createElement('td');
             // Do not pass rows array by refrence
-            var aryRow = this.aryTbleRows[kItem].slice(0);
+            var aryRow = this.aryTblRows[kItem].slice(0);
             // If aryRow was passed by refrence this would eat the row cells and cause a bug!
             var oRowOptions = aryRow.pop();
 
-            domTbleRow = document.createElement('tr');
+            domTblRow = document.createElement('tr');
 
             if (this.multiSelectEnabled) {
-                domTbleCell = document.createElement('td');
-                domTbleCell.className = this.multiSelectOpt.className;
+                domTblCell = document.createElement('td');
+                domTblCell.className = this.multiSelectOpt.className;
 
                 var el = document.createElement('input');
 
@@ -179,24 +179,24 @@ function mDataGrid() {
                 el.value = oRowOptions.value;
                 el.checked = oRowOptions.checked;
 
-                domTbleCell.appendChild(el);
-                domTbleRow.appendChild(domTbleCell);
+                domTblCell.appendChild(el);
+                domTblRow.appendChild(domTblCell);
             }
 
             for (var itemKey in aryRow) {
-                domTbleCell = document.createElement('td');
-                domTbleCell.appendChild(document.createTextNode(aryRow[itemKey]));
-                domTbleRow.appendChild(domTbleCell);
+                domTblCell = document.createElement('td');
+                domTblCell.appendChild(document.createTextNode(aryRow[itemKey]));
+                domTblRow.appendChild(domTblCell);
             }
 
-            this.domTbleBody.appendChild(domTbleRow);
+            this.domTblBody.appendChild(domTblRow);
         }
 
         // Construct Table
-        this.domTble.appendChild(this.domTbleHead);
-        this.domTble.appendChild(this.domTbleBody);
+        this.domTbl.appendChild(this.domTblHead);
+        this.domTbl.appendChild(this.domTblBody);
 
         // Append Table to Element
-        elDataTable.appendChild(this.domTble);
+        elDataTable.appendChild(this.domTbl);
     };
 }
