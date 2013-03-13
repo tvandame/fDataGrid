@@ -9,7 +9,7 @@
         <div id="divToolBar">
             <form>
                 <fieldset>
-                    <legend>Commands</legend> <span>
+                   <span>
                         <select id="selCircles">
                             <option value="NULL">Select A Circle</option>
                             <option value="friends">Friends</option>
@@ -25,7 +25,7 @@
         </div>
         <div id="divDataGrid">
             <fieldset>
-                <legend>Simple Data Grid Module Output</legend>
+                <legend>Output</legend>
                 <div id="divDataTable" style="margin: 10px; width: 100%;"></div>
             </fieldset>
         </div>
@@ -153,9 +153,9 @@
             oDataGrid.multiSelectEnabled(oOptMultiSelect);
 
             // Set Table Attributes
-            oDataGrid.setTableId("data");
-            oDataGrid.setTableName("data");
-            oDataGrid.setTableClassName("datatable");
+            oDataGrid.setId("data");
+            oDataGrid.setName("data");
+            oDataGrid.setClassName("datatable");
 
             // Add Data Grid Header Items
             oDataGrid.addHeadItem("First Name");
