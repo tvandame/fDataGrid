@@ -118,12 +118,12 @@ function mDataGrid() {
      * @returns {undefined}
      */
     this.addRow = function(aryRow) {
-	if (this.debug)
-	    console.log('EVENT: addRow');
-	if (this.debug)
-	    console.log(aryRow);
-
 	this.aryTblRows.push(aryRow);
+	
+	if (this.debug) {
+	    console.log('EVENT: addRow');
+	    console.log(aryRow);	
+	}
     };
 
     /**
@@ -234,9 +234,9 @@ function mDataGrid() {
 	    var domTblFooterCell = document.createElement('td');
 
 	    if (this.multiSelectEnabled) {
-		domTblFooterCell.colSpan = this.aryTblHeadItems.length + 1;
+		domTblFooterCell.colSpan = this.aryTblHeadCells.length + 1;
 	    } else {
-		domTblFooterCell.colSpan = this.aryTblHeadItems.length;
+		domTblFooterCell.colSpan = this.aryTblHeadCells.length;
 	    }
 
 	    domTblFooterCell.appendChild(document.createTextNode('Empty Result'));
