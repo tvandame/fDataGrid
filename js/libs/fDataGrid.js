@@ -65,7 +65,7 @@ function mDataGrid() {
      * 
      * @type Array
      */
-    this.aryTblHeadItems = [];
+    this.aryTblHeadCells = [];
 
     /**
      * 
@@ -92,13 +92,23 @@ function mDataGrid() {
      * @param {type} strItem
      * @returns {undefined}
      */
+    /**
+     * Add data grid table head items/cells.
+     * 
+     * @param {type} strItem
+     * @returns {undefined}
+     */
     this.addHeadItem = function(strItem) {
-	if (this.debug)
-	    console.log('EVENT: addHeadItem');
-	if (this.debug)
-	    console.log(strItem);
+	elCell = document.createElement('th');
+	elCellTextNode = document.createTextNode(strItem);
+	elCell.appendChild(elCellTextNode);
 
-	this.aryTblHeadItems.push(strItem);
+	this.aryTblHeadCells.push(elCell); 
+
+	if (this.debug) {
+	    console.log('EVENT: addHeadItem');
+	    console.log(strItem);
+	}
     };
 
     /**
@@ -203,24 +213,22 @@ function mDataGrid() {
 	    console.log('EVENT: createDataTable');
 
 	var domTblHeadRow = document.createElement('tr');
-	var domTblHeadCell = document.createElement('th');
 
 	if (this.multiSelectEnabled) {
 	    if (this.debug)
 		console.log('NOTICE: Multiple Selected Enabled');
+	    var domTblHeadCell = document.createElement('th');
 
 	    domTblHeadCell.appendChild(document.createTextNode(this.multiSelectOpt.colTitle));
 	    domTblHeadRow.appendChild(domTblHeadCell);
-	}
-
-	for (var item in this.aryTblHeadItems) {
-	    domTblHeadCell = document.createElement('th');
-	    domTblHeadCell.appendChild(document.createTextNode(this.aryTblHeadItems[item]));
-	    domTblHeadRow.appendChild(domTblHeadCell);
+	}	
+	
+	for (var item in this.aryTblHeadCells) {
+	    domTblHeadRow.appendChild(this.aryTblHeadCells[item]);
 	}
 
 	this.domTblHead.appendChild(domTblHeadRow);
-
+	
 	if (!this.aryTblRows.length > 0) {
 	    var domTblFooterRow = document.createElement('tr');
 	    var domTblFooterCell = document.createElement('td');
@@ -237,7 +245,6 @@ function mDataGrid() {
 	    this.domTblFooter.appendChild(domTblFooterRow);
 	    this.domTbl.appendChild(this.domTblFooter);
 	} else {
-
 	    // Build Table Body Rows
 	    for (var kItem in this.aryTblRows) {
 		var domTblCell = document.createElement('td');
@@ -272,7 +279,6 @@ function mDataGrid() {
 
 		this.domTblBody.appendChild(domTblRow);
 	    }
-
 	}
 
 	// Construct Table Header
@@ -285,9 +291,9 @@ function mDataGrid() {
 	var domTblFooterCell = document.createElement('td');
 
 	if (this.multiSelectEnabled) {
-	    domTblFooterCell.colSpan = this.aryTblHeadItems.length + 1;
+	    domTblFooterCell.colSpan = this.aryTblHeadCells.length + 1;
 	} else {
-	    domTblFooterCell.colSpan = this.aryTblHeadItems.length;
+	    domTblFooterCell.colSpan = this.aryTblHeadCells.length;
 	}
 
 	domTblFooterCell.appendChild(document.createTextNode('Count: ' + this.aryTblRows.length));
