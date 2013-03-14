@@ -1,5 +1,5 @@
 /*
- * fDataGrid.js v0.0.0
+ * fDataGrid.js v0.1
  *
  * Copyright (c) 2013-2013 - Travis J. VanDame
  * 
