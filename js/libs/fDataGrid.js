@@ -72,7 +72,7 @@ function mDataGrid() {
      * @type Array
      */
     this.aryTblRows = [];
-
+    
     /**
      * 
      * @type String|type
@@ -85,15 +85,9 @@ function mDataGrid() {
      * @returns {undefined}
      */
     this.multiSelectEnabled = false;
-
+    
     /**
-     * Add data grid table head items/cells.
-     * 
-     * @param {type} strItem
-     * @returns {undefined}
-     */
-    /**
-     * Add data grid table head items/cells.
+     * Add data grid table head item.
      * 
      * @param {type} strItem
      * @returns {undefined}
@@ -118,7 +112,36 @@ function mDataGrid() {
      * @returns {undefined}
      */
     this.addRow = function(aryRow) {
-	this.aryTblRows.push(aryRow);
+	var elRow = document.createElement('tr');
+	var aryRowClone =aryRow.slice(0);
+	var oRowOptions = aryRowClone.pop();
+
+
+	if (this.multiSelectEnabled) {
+	    elCellChk = document.createElement('td');
+	    elCellChk.className = this.multiSelectOpt.className;
+
+	    var elChk = document.createElement('input');
+
+	    elChk.type = "checkbox";
+	    elChk.id = oRowOptions.id;
+	    elChk.name = oRowOptions.name;
+	    elChk.value = oRowOptions.value;
+	    elChk.checked = oRowOptions.checked;
+
+	    elCellChk.appendChild(elChk);
+	    elRow.appendChild(elCellChk);
+	}	
+
+	for (var item in aryRowClone) {	        	    
+	    var elCell = document.createElement('td');
+	    var elCellTextNode = document.createTextNode(aryRowClone[item]);
+
+	    elCell.appendChild(elCellTextNode);
+	    elRow.appendChild(elCell);
+
+	    this.aryTblRows.push(elRow);
+	}
 	
 	if (this.debug) {
 	    console.log('EVENT: addRow');
@@ -214,76 +237,30 @@ function mDataGrid() {
 
 	var domTblHeadRow = document.createElement('tr');
 
+	// Build Table Head Row
 	if (this.multiSelectEnabled) {
 	    if (this.debug)
 		console.log('NOTICE: Multiple Selected Enabled');
+
 	    var domTblHeadCell = document.createElement('th');
 
 	    domTblHeadCell.appendChild(document.createTextNode(this.multiSelectOpt.colTitle));
 	    domTblHeadRow.appendChild(domTblHeadCell);
+	    
+	    this.domTblHead.appendChild(domTblHeadRow);
 	}	
 	
 	for (var item in this.aryTblHeadCells) {
 	    domTblHeadRow.appendChild(this.aryTblHeadCells[item]);
 	}
 
-	this.domTblHead.appendChild(domTblHeadRow);
-	
-	if (!this.aryTblRows.length > 0) {
-	    var domTblFooterRow = document.createElement('tr');
-	    var domTblFooterCell = document.createElement('td');
-
-	    if (this.multiSelectEnabled) {
-		domTblFooterCell.colSpan = this.aryTblHeadCells.length + 1;
-	    } else {
-		domTblFooterCell.colSpan = this.aryTblHeadCells.length;
-	    }
-
-	    domTblFooterCell.appendChild(document.createTextNode('Empty Result'));
-	    domTblFooterRow.appendChild(domTblFooterCell);
-
-	    this.domTblFooter.appendChild(domTblFooterRow);
-	    this.domTbl.appendChild(this.domTblFooter);
-	} else {
-	    // Build Table Body Rows
-	    for (var kItem in this.aryTblRows) {
-		var domTblCell = document.createElement('td');
-		// Do not pass rows array by refrence
-		var aryRow = this.aryTblRows[kItem].slice(0);
-		// If aryRow was passed by refrence this would eat the row cells and cause a bug!
-		var oRowOptions = aryRow.pop();
-
-		domTblRow = document.createElement('tr');
-
-		if (this.multiSelectEnabled) {
-		    domTblCell = document.createElement('td');
-		    domTblCell.className = this.multiSelectOpt.className;
-
-		    var el = document.createElement('input');
-
-		    el.type = "checkbox";
-		    el.id = oRowOptions.id;
-		    el.name = oRowOptions.name;
-		    el.value = oRowOptions.value;
-		    el.checked = oRowOptions.checked;
-
-		    domTblCell.appendChild(el);
-		    domTblRow.appendChild(domTblCell);
-		}
-
-		for (var itemKey in aryRow) {
-		    domTblCell = document.createElement('td');
-		    domTblCell.appendChild(document.createTextNode(aryRow[itemKey]));
-		    domTblRow.appendChild(domTblCell);
-		}
-
-		this.domTblBody.appendChild(domTblRow);
-	    }
+	// Build Table Body Rows
+	for (var kItem in this.aryTblRows) {
+	    this.domTblBody.appendChild(this.aryTblRows[kItem]);
 	}
 
 	// Construct Table Header
 	this.domTbl.appendChild(this.domTblHead);
-	// Construct Table Footer
 	this.domTbl.appendChild(this.domTblBody);
 
 	// Construct Table Footer
