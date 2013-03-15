@@ -1,48 +1,26 @@
-/*
- * fDataGrid.js v0.1
- *
- * Copyright (c) 2013-2013 - Travis J. VanDame
- * 
- * Permission is hereby granted, free of charge, to any person
- * obtaining a copy of this software and associated documentation
- * files (the "Software"), to deal in the Software without
- * restriction, including without limitation the rights to use,
- * copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the
- * Software is furnished to do so, subject to the following
- * conditions:
- * 
- * The above copyright notice and this permission notice shall be
- * included in all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
- * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
- * OTHER DEALINGS IN THE SOFTWARE.
- */
-
 /**
  * 
+ * @param {string} strContainer
  * @returns {mDataGrid}
  */
-function mDataGrid() {
-
+function mDataGrid(strContainer) {
     /**
      * 
-     * @type Boolean|Boolean
+     * @type @exp;document@call;getElementById
      */
-    this.debug = false;
-
+    this.container = document.getElementById(strContainer);
     /**
      * 
      * @type @exp;document@call;createElement
      */
     this.domTbl = document.createElement('table');
 
+    /*
+     * 
+     * @type @exp;document@call;createElement
+     */
+    this.domTblCaption = document.createElement('caption');
+    
     /**
      * 
      * @type @exp;document@call;createElement
@@ -72,19 +50,22 @@ function mDataGrid() {
      * @type Array
      */
     this.aryTblRows = [];
-    
-    /**
-     * 
-     * @type String|type
-     */
-    this.multiSelectOpt = "";
 
     /**
      * 
-     * @param {type} enabled
-     * @returns {undefined}
+     * @type Object Object
      */
-    this.multiSelectEnabled = false;
+    this.multiSelectOptions = {
+        enabled: false,
+        headRowCellTitle: "Select",
+        bodyRowCellClass: "selectinput"
+    };
+    
+    this.addCaption = function(strCaption) {
+        elCaptionTextNode = document.createTextNode(strCaption);
+        
+        this.domTblCaption.appendChild(elCaptionTextNode);
+    };
     
     /**
      * Add data grid table head item.
@@ -98,11 +79,6 @@ function mDataGrid() {
 	elCell.appendChild(elCellTextNode);
 
 	this.aryTblHeadCells.push(elCell); 
-
-	if (this.debug) {
-	    console.log('EVENT: addHeadItem');
-	    console.log(strItem);
-	}
     };
 
     /**
@@ -116,10 +92,9 @@ function mDataGrid() {
 	var aryRowClone =aryRow.slice(0);
 	var oRowOptions = aryRowClone.pop();
 
-
-	if (this.multiSelectEnabled) {
+	if (this.multiSelectOptions.enabled) {
 	    elCellChk = document.createElement('td');
-	    elCellChk.className = this.multiSelectOpt.className;
+	    elCellChk.className = this.multiSelectOptions.bodyRowCellClass;
 
 	    var elChk = document.createElement('input');
 
@@ -142,11 +117,6 @@ function mDataGrid() {
 
 	    this.aryTblRows.push(elRow);
 	}
-	
-	if (this.debug) {
-	    console.log('EVENT: addRow');
-	    console.log(aryRow);	
-	}
     };
 
     /**
@@ -156,11 +126,6 @@ function mDataGrid() {
      * @returns {undefined}
      */
     this.setId = function(strId) {
-	if (this.debug)
-	    console.log('EVENT: setTableId');
-	if (this.debug)
-	    console.log(strId);
-
 	this.domTbl.id = strId;
     };
 
@@ -171,11 +136,6 @@ function mDataGrid() {
      * @returns {undefined}
      */
     this.setName = function(strName) {
-	if (this.debug)
-	    console.log('EVENT: setTableName');
-	if (this.debug)
-	    console.log(strName);
-
 	this.domTbl.name = strName;
     };
 
@@ -186,65 +146,32 @@ function mDataGrid() {
      * @returns {undefined}
      */
     this.setClassName = function(strClassName) {
-	if (this.debug)
-	    console.log('EVENT: setTableClassName');
-	if (this.debug)
-	    console.log(strClassName);
-
 	this.domTbl.className = strClassName;
-    };
-
-    /**
-     * Set data grid multi-select.
-     * 
-     * @param {type} enabled
-     * @returns {undefined}
-     */
-    this.multiSelectEnabled = function(enabled) {
-	if (this.debug)
-	    console.log('EVENT: enableMultiSelect');
-	if (this.debug)
-	    console.log(enabled);
-
-	this.multiSelectOpt = enabled;
-	this.multiSelectEnabled = true;
-    };
-
-    /**
-     * Set data grid debug.
-     * 
-     * @returns {undefined}
-     */
-    this.enableDebug = function() {
-	if (this.debug)
-	    console.log('EVENT: enableDebug');
-
-	this.debug = true;
-
-	if (this.debug)
-	    console.log(this.debug);
     };
 
     /**
      * Create data grid.
      * 
-     * @param {type} strApplyTo
      * @returns {undefined}
      */
-    this.createDataTable = function(strApplyTo) {
-	if (this.debug)
-	    console.log('EVENT: createDataTable');
+    this.createDataTable = function() {
+        var headCellsCount = this.aryTblHeadCells.length;
+                
+        if (this.multiSelectOptions.enabled) {
+            headCellsCount++;
+        }
 
 	var domTblHeadRow = document.createElement('tr');
 
-	// Build Table Head Row
-	if (this.multiSelectEnabled) {
-	    if (this.debug)
-		console.log('NOTICE: Multiple Selected Enabled');
-
+	/**
+         * If multiple select is enabled attach a new cell to head row
+         * and attach a DOM TextNode to the cell describing the multiple 
+         * select column. 
+         */
+	if (this.multiSelectOptions.enabled) {
 	    var domTblHeadCell = document.createElement('th');
 
-	    domTblHeadCell.appendChild(document.createTextNode(this.multiSelectOpt.colTitle));
+	    domTblHeadCell.appendChild(document.createTextNode(this.multiSelectOptions.headRowCellTitle));
 	    domTblHeadRow.appendChild(domTblHeadCell);
 	    
 	    this.domTblHead.appendChild(domTblHeadRow);
@@ -252,14 +179,27 @@ function mDataGrid() {
 	
 	for (var item in this.aryTblHeadCells) {
 	    domTblHeadRow.appendChild(this.aryTblHeadCells[item]);
+            this.domTblHead.appendChild(domTblHeadRow);
 	}
 
 	// Build Table Body Rows
-	for (var kItem in this.aryTblRows) {
-	    this.domTblBody.appendChild(this.aryTblRows[kItem]);
-	}
+        if (this.aryTblRows.length > 0) {
+            for (var kItem in this.aryTblRows) {
+                this.domTblBody.appendChild(this.aryTblRows[kItem]);
+            }
+        } else {
+            elRow = document.createElement('tr');
+            elCell = document.createElement('td');
+            elCell.colSpan = headCellsCount;
+            nodeText = document.createTextNode('No Data Found');
+            elCell.appendChild(nodeText);
+            elRow.appendChild(elCell);
+            
+            this.domTblBody.appendChild(elRow);
+        }
 
-	// Construct Table Header
+        // Construct Table
+        this.domTbl.appendChild(this.domTblCaption);
 	this.domTbl.appendChild(this.domTblHead);
 	this.domTbl.appendChild(this.domTblBody);
 
@@ -267,19 +207,16 @@ function mDataGrid() {
 	var domTblFooterRow = document.createElement('tr');
 	var domTblFooterCell = document.createElement('td');
 
-	if (this.multiSelectEnabled) {
-	    domTblFooterCell.colSpan = this.aryTblHeadCells.length + 1;
-	} else {
-	    domTblFooterCell.colSpan = this.aryTblHeadCells.length;
-	}
-
+        domTblFooterCell.colSpan = headCellsCount;
 	domTblFooterCell.appendChild(document.createTextNode('Count: ' + this.aryTblRows.length));
 	domTblFooterRow.appendChild(domTblFooterCell);
 
 	this.domTblFooter.appendChild(domTblFooterRow);
 	this.domTbl.appendChild(this.domTblFooter);
 
-	// Append Table to Element
-	elDataTable.appendChild(this.domTbl);
+        this.container.innerHTML = "";
+	this.container.appendChild(this.domTbl);
+        
+        return true;
     };
 }

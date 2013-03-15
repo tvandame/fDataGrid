@@ -26,7 +26,8 @@
         <div id="divDataGrid">
             <fieldset>
                 <legend>Output</legend>
-                <div id="divDataTable" style="margin: 10px; width: 100%;"></div>
+                <div id="divDataTable_1" style="margin: 10px; width: 100%;"></div>
+                <div id="divDataTable_2" style="margin: 10px; width: 100%;"></div>
             </fieldset>
         </div>
         <script type="text/javascript" src="js/libs/fDataGrid.js"></script>
@@ -34,8 +35,7 @@
         // Set Refrence To Utilized DOM Elements
         var elCircles = document.getElementById('selCircles');
         var elLoadButton = document.getElementById('btnLoadGrid');
-        var elDataTable = document.getElementById('divDataTable');
-  
+        
         oData = {
             "description": "Circles JSON Schema",
             "type": "object",
@@ -137,44 +137,60 @@
         };
   
         function loadData() {
-            var oDataGrid = new mDataGrid();
             var strCirclesValue = elCircles.options[elCircles.selectedIndex].value;
-
-            // Enable Debugging
-            oDataGrid.enableDebug();
-
-            // MultiSelect Options
-            var oOptMultiSelect = {
-                colTitle: "Select",
-                className: "selectinput"
-            };
-
-            //oJSTDataTble.enableInput("checkbox", "Select");
-            oDataGrid.multiSelectEnabled(oOptMultiSelect);
+        
+            // Create Example One
+            var oDataGrid_1 = new mDataGrid("divDataTable_1");
 
             // Set Table Attributes
-            oDataGrid.setId("data");
-            oDataGrid.setName("data");
-            oDataGrid.setClassName("datatable");
+            oDataGrid_1.setId("data_1");
+            oDataGrid_1.setName("data_1");
+            oDataGrid_1.setClassName("datatable");
+
+            // Add Data Grid Caption
+            oDataGrid_1.addCaption("Data Grid Example One");
+
+            // Enable Multiple Select Option
+            oDataGrid_1.multiSelectOptions.enabled = true;
 
             // Add Data Grid Header Items
-            oDataGrid.addHeadItem("First Name");
-            oDataGrid.addHeadItem("Last Name");
+            oDataGrid_1.addHeadItem("First Name");
+            oDataGrid_1.addHeadItem("Last Name");
 
             // Create Table Body Rows
             for (var kRow in oData.properties[strCirclesValue]) {
-                oDataGrid.addRow(oData.properties[strCirclesValue][kRow]);
+                oDataGrid_1.addRow(oData.properties[strCirclesValue][kRow]);
             }
 
-            oDataGrid.createDataTable("queueList");
+            oDataGrid_1.createDataTable();
+            
+            // Create Eample Two
+            var oDataGrid_2 = new mDataGrid("divDataTable_2");
+
+            // Set Table Attributes
+            oDataGrid_2.setId("data_2");
+            oDataGrid_2.setName("data_2");
+            oDataGrid_2.setClassName("datatable");
+
+            // Add Data Grid Caption
+            oDataGrid_2.addCaption("Data Grid Example Two");
+            
+            // Enable Multiple Select Option
+            oDataGrid_2.multiSelectOptions.enabled = false;
+            
+            // Add Data Grid Header Items
+            oDataGrid_2.addHeadItem("First Name");
+            oDataGrid_2.addHeadItem("Last Name");
+
+            // Create Table Body Rows
+            for (var kRow in oData.properties[strCirclesValue]) {
+                oDataGrid_2.addRow(oData.properties[strCirclesValue][kRow]);
+            }
+
+            oDataGrid_2.createDataTable();            
         }
 
         elLoadButton.addEventListener("click", function () {
-            console.log('EVENT: elLoadButton.addEventListener()');
-
-            // Clear elDataList <DIV>
-            elDataTable.innerHTML = "";
-
             loadData();
         });                     
         </script>
