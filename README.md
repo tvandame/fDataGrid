@@ -1,4 +1,4 @@
 fDataGrid
 ===========
 
-Simple Data Grid (Simple Pure JavaScript Data Grid)
+SimpleJavaScript Data Grid (Simple Pure JavaScript Data Grid)

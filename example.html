@@ -136,7 +136,7 @@
                     }
         };
   
-        function loadData() {
+        function getDataGrid() {
             var strCirclesValue = elCircles.options[elCircles.selectedIndex].value;
         
             // Create Example One
@@ -145,24 +145,24 @@
             // Set Table Attributes
             oDataGrid_1.setId("data_1");
             oDataGrid_1.setName("data_1");
-            oDataGrid_1.setClassName("datatable");
+            oDataGrid_1.setClass("datatable");
 
             // Add Data Grid Caption
             oDataGrid_1.addCaption("Data Grid Example One");
 
             // Enable Multiple Select Option
-            oDataGrid_1.multiSelectOptions.enabled = true;
+            oDataGrid_1.optionsMultiSelect.enabled = true;
 
             // Add Data Grid Header Items
-            oDataGrid_1.addHeadItem("First Name");
-            oDataGrid_1.addHeadItem("Last Name");
+            oDataGrid_1.addHeadCell("First Name");
+            oDataGrid_1.addHeadCell("Last Name");
 
             // Create Table Body Rows
             for (var kRow in oData.properties[strCirclesValue]) {
                 oDataGrid_1.addRow(oData.properties[strCirclesValue][kRow]);
             }
 
-            oDataGrid_1.createDataTable();
+            oDataGrid_1.init();
             
             // Create Eample Two
             var oDataGrid_2 = new mDataGrid("divDataTable_2");
@@ -170,28 +170,28 @@
             // Set Table Attributes
             oDataGrid_2.setId("data_2");
             oDataGrid_2.setName("data_2");
-            oDataGrid_2.setClassName("datatable");
+            oDataGrid_2.setClass("datatable");
 
             // Add Data Grid Caption
             oDataGrid_2.addCaption("Data Grid Example Two");
             
             // Enable Multiple Select Option
-            oDataGrid_2.multiSelectOptions.enabled = false;
+            oDataGrid_2.optionsMultiSelect.enabled = false;
             
             // Add Data Grid Header Items
-            oDataGrid_2.addHeadItem("First Name");
-            oDataGrid_2.addHeadItem("Last Name");
+            oDataGrid_2.addHeadCell("First Name");
+            oDataGrid_2.addHeadCell("Last Name");
 
             // Create Table Body Rows
             for (var kRow in oData.properties[strCirclesValue]) {
                 oDataGrid_2.addRow(oData.properties[strCirclesValue][kRow]);
             }
 
-            oDataGrid_2.createDataTable();            
+            oDataGrid_2.init();            
         }
 
         elLoadButton.addEventListener("click", function () {
-            loadData();
+            getDataGrid();
         });                     
         </script>
     </body>
