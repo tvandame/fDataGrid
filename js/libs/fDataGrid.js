@@ -15,7 +15,7 @@
  * Example Usage
  * =========================================================
      
-    var oDataGrid = new mDataGrid(<container div id>);
+    var oDataGrid = new fDataGrid(<container div id>);
     
      // Set Table Attributes
     oDataGrid.setId(<assigned to datagrid table id>);
@@ -58,7 +58,7 @@
  * @param {string} strContainer
  * @returns {mDataGrid}
  */
-function mDataGrid(strContainer) {
+function fDataGrid(strContainer) {
     /**
      * 
      * @type @exp;document@call;getElementById
@@ -184,9 +184,9 @@ function mDataGrid(strContainer) {
 
 	    elCell.appendChild(elCellTextNode);
 	    elRow.appendChild(elCell);
-
-	    this.aryTblRows.push(elRow);
 	}
+	
+	this.aryTblRows.push(elRow);
 	
 	return true;
     };
@@ -264,11 +264,18 @@ function mDataGrid(strContainer) {
 	    }
 	} else {
 	    var elRow = document.createElement('tr');
+	    var elDivMessage = document.createElement('div');
+	    
+	    elDivMessage.id = "messageBox";
+	    elDivMessage.className = "message-warn";
+	    
 	    var nodeText = document.createTextNode('No Data Found');
+	    
+	    elDivMessage.appendChild(nodeText);
 	    
 	    elCell = document.createElement('td');
 	    elCell.colSpan = headCellsCount;
-	    elCell.appendChild(nodeText);
+	    elCell.appendChild(elDivMessage);
 
 	    elRow.appendChild(elCell);
 
