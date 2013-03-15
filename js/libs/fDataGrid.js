@@ -1,3 +1,18 @@
+/*
+ * fDataGrid 0.1
+ * 
+ * GITHUB
+ * =========================================================
+ * HTTP: https://github.com/tvandame/fDataGrid.git
+ * SSH: git@github.com:tvandame/fDataGrid.git
+ * GIT Read-Only: git://github.com/tvandame/fDataGrid.git
+ *
+ * Copyright 2013, Travis J. VanDame
+ *
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
+ */
+
 /**
  * 
  * @param {string} strContainer
