@@ -44,7 +44,7 @@ function mDataGrid(strContainer) {
      * @type Array
      */
     this.aryTblHeadCells = [];
-
+    
     /**
      * 
      * @type Array
@@ -52,7 +52,8 @@ function mDataGrid(strContainer) {
     this.aryTblRows = [];
 
     /**
-     * 
+     * @name optionsMultiSelect
+     * @description Data grid multi select options.
      * @type Object Object
      */
     this.optionsMultiSelect = {
@@ -62,12 +63,13 @@ function mDataGrid(strContainer) {
     };
     
     /**
-     * @name addCaption
+     * @name 
+     * @description Add data grid caption.
      * @param {string} strCaption
      * @returns {true}
      */
     this.addCaption = function(strCaption) {
-	elCaptionTextNode = document.createTextNode(strCaption);
+	var elCaptionTextNode = document.createTextNode(strCaption);
 
 	this.domTblCaption.appendChild(elCaptionTextNode);
 	
@@ -75,15 +77,14 @@ function mDataGrid(strContainer) {
     };
 
     /**
-     * Add data grid table head item.
-     * 
      * @name addHeadCell
+     * @description Add data grid header cell
      * @param {string} strItem
      * @returns {true}
      */
     this.addHeadCell = function(strItem) {
-	elCell = document.createElement('th');
-	elCellTextNode = document.createTextNode(strItem);
+	var elCell = document.createElement('th');
+	var elCellTextNode = document.createTextNode(strItem);
 	elCell.appendChild(elCellTextNode);
 
 	this.aryTblHeadCells.push(elCell);
@@ -92,9 +93,8 @@ function mDataGrid(strContainer) {
     };
 
     /**
-     * Add data grid table body rows.
-     * 
      * @name addrRow
+     * @description Add row to data grid.
      * @param {array} aryRow
      * @returns {true}
      */
@@ -108,7 +108,7 @@ function mDataGrid(strContainer) {
 	 * and attach a DOM checkbox element to the cell.
 	 */
 	if (this.optionsMultiSelect.enabled) {
-	    elCellChk = document.createElement('td');
+	    var elCellChk = document.createElement('td');
 	    elCellChk.className = this.optionsMultiSelect.bodyRowCellClass;
 
 	    var elChk = document.createElement('input');
@@ -137,9 +137,8 @@ function mDataGrid(strContainer) {
     };
 
     /**
-     * Set data grid table Id.
-     * 
      * @name setId
+     * @description Set the data grid table id
      * @param {string} strId
      * @returns {true}
      */
@@ -149,8 +148,8 @@ function mDataGrid(strContainer) {
     };
 
     /**
-     * Set data grid table name.
-     * 
+     * @name setName
+     * @description Set the data grid table name.
      * @param {string} strName
      * @returns {true}
      */
@@ -160,9 +159,8 @@ function mDataGrid(strContainer) {
     };
 
     /**
-     * Set data grid table css class name.
-     * 
      * @name setClass
+     * @description Set the data grid table css class name.
      * @param {string} strClassName
      * @returns {true}
      */
@@ -172,10 +170,9 @@ function mDataGrid(strContainer) {
     };
 
     /**
-     * Create data grid.
-     * 
      * @name init
-     * @returns {undefined}
+     * @description Initialize the data grid and display.
+     * @returns {true}
      */
     this.init = function() {
 	var headCellsCount = this.aryTblHeadCells.length;
@@ -211,11 +208,13 @@ function mDataGrid(strContainer) {
 		this.domTblBody.appendChild(this.aryTblRows[kItem]);
 	    }
 	} else {
-	    elRow = document.createElement('tr');
+	    var elRow = document.createElement('tr');
+	    var nodeText = document.createTextNode('No Data Found');
+	    
 	    elCell = document.createElement('td');
 	    elCell.colSpan = headCellsCount;
-	    nodeText = document.createTextNode('No Data Found');
 	    elCell.appendChild(nodeText);
+
 	    elRow.appendChild(elCell);
 
 	    this.domTblBody.appendChild(elRow);
