@@ -6,7 +6,7 @@ on when there is nothing else to do. There are many data grids out there
 and this project does not aim to compete with those projects. It's just pure
 coding fun!
 
-See fDataGrid in action over at jsFiddle [here]http://jsfiddle.net/tvandame/Jh7HQ/
+See fDataGrid in action over at jsFiddle http://jsfiddle.net/tvandame/Jh7HQ/
 
 Example Configuration
 =============================================================================
