@@ -6,7 +6,7 @@
  * Licensed under the MIT license:
  * http://www.opensource.org/licenses/MIT
  * 
-  * GITHUB Repository Information
+ * GITHUB Repository Information
  * =========================================================
  * HTTP: https://github.com/tvandame/fDataGrid.git
  * SSH: git@github.com:tvandame/fDataGrid.git
@@ -152,44 +152,6 @@ function fDataGrid(strContainer) {
         }
         
         return true;
-    };
-
-    this.addRows = function(oRowData) {
-	var elRow = document.createElement('tr');
-	var aryRowClone = aryRow.slice(0);
-	var oRowOptions = aryRowClone.pop();
-
-	/**
-	 * If multiple select is enabled attach a new cell to body row
-	 * and attach a DOM checkbox element to the cell.
-	 */
-	if (this.optionsMultiSelect.enabled) {
-	    var elCellChk = document.createElement('td');
-	    elCellChk.className = this.optionsMultiSelect.bodyRowCellClass;
-
-	    var elChk = document.createElement('input');
-
-	    elChk.type = "checkbox";
-	    elChk.id = oRowOptions.id;
-	    elChk.name = oRowOptions.name;
-	    elChk.value = oRowOptions.value;
-	    elChk.checked = oRowOptions.checked;
-	   
-	    elCellChk.appendChild(elChk);
-	    elRow.appendChild(elCellChk);
-	}
-
-	for (var item in aryRowClone) {
-	    var elCell = document.createElement('td');
-	    var elCellTextNode = document.createTextNode(aryRowClone[item]);
-
-	    elCell.appendChild(elCellTextNode);
-	    elRow.appendChild(elCell);
-	}
-	
-	this.aryTblRows.push(elRow);
-	
-	return true;        
     };
 
     /**
