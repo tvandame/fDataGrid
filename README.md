@@ -7,7 +7,7 @@ SimpleJavaScript Data Grid (Simple Pure JavaScript Data Grid)
 Example
 =========================================================
 
-<code>
+```javascript
 var oDataGrid = new fDataGrid(<container div id>);
 
  // Set Table Attributes
@@ -43,4 +43,4 @@ oDataGrid.addRow(<json object of row data>);
 
 // Display Data Grid In Assigned Container
 oDataGrid_1.init();
-</code>
+```
