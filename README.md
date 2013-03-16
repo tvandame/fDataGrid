@@ -1,13 +1,15 @@
 fDataGrid
-===========
+=========
 
-SimpleJavaScript Data Grid (Simple Pure JavaScript Data Grid)
-
+A very Simple Pure JavaScript Data Grid. This is fun to play with and build
+on when there is nothing else to do. There are many data grids out there
+and this project does not aim to compete with those projects. It's just pure
+coding fun!
 
 Example Configuration
-=========================================================
+=============================================================================
 ```javascript
-var oDataGrid = new fDataGrid(<container div id>);
+var oDataGrid = new fDataGrid("someDivId");
 
  // Set Table Attributes
 oDataGrid.setId("dataGridId");
@@ -19,7 +21,8 @@ oDataGrid.addCaption("Simple Data Grid Example");
 
 // Enable Multiple Select Option
 // This will provide you with a checkbox next to each row
-oDataGrid_1.optionsMultiSelect.enabled = true; // false = no checkboxes / true = checkboxes
+// false = no checkboxes / true = checkboxes
+oDataGrid_1.optionsMultiSelect.enabled = true; 
 
 // Example JSON Header Data
 var oDataGridHeader = {
