@@ -1,5 +1,5 @@
 {
-    "description": "Circles JSON Schema",
+    "description": "Circles JSON Data Schema",
     "type": "object",
     "properties":
             {

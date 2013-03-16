@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>mDataGrid (Just a pure JavaScript Data Table)</title>
+        <title>fDataGrid (Just a pure JavaScript Data Table)</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="css/example.css" type="text/css" />
     </head>
@@ -35,8 +35,19 @@
         // Set Refrence To Utilized DOM Elements
         var elCircles = document.getElementById('selCircles');
         var elLoadButton = document.getElementById('btnLoadGrid');
-        
-        oData = {
+
+        var oDataGridHeader = {
+               "total":2,
+               "columns": ["id","fname","lname"], 
+               "results": [
+                   {"id":1, "nodeText":"First Name"},
+                   {"id":2, "nodeText":"Last Name"}
+               ],
+               "summary": "Data Grid Header",
+               "caption": "Example Data Grid One"
+           };    
+   
+        var oData = {
             "description": "Circles JSON Schema",
             "type": "object",
             "properties":
@@ -136,6 +147,8 @@
                     }
         };
   
+
+  
         function getDataGrid() {
             var strCirclesValue = elCircles.options[elCircles.selectedIndex].value;
         
@@ -154,8 +167,7 @@
             oDataGrid_1.optionsMultiSelect.enabled = true;
 
             // Add Data Grid Header Items
-            oDataGrid_1.addHeadCell("First Name");
-            oDataGrid_1.addHeadCell("Last Name");
+            oDataGrid_1.addHeader(oDataGridHeader);
 
             // Create Table Body Rows
             for (var kRow in oData.properties[strCirclesValue]) {
@@ -179,8 +191,7 @@
             oDataGrid_2.optionsMultiSelect.enabled = false;
             
             // Add Data Grid Header Items
-            oDataGrid_2.addHeadCell("First Name");
-            oDataGrid_2.addHeadCell("Last Name");
+            oDataGrid_2.addHeader(oDataGridHeader);
 
             // Create Table Body Rows
             for (var kRow in oData.properties[strCirclesValue]) {

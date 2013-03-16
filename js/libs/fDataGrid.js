@@ -132,19 +132,64 @@ function fDataGrid(strContainer) {
     };
 
     /**
-     * @name addHeadCell
-     * @description Add data grid header cell
-     * @param {string} strItem
-     * @returns {true}
+     * @name addHeader
+     * @description Add data grid header columns
+     * @param {object} oHeaderData
+     * @returns {Boolean}
      */
-    this.addHeadCell = function(strItem) {
-	var elCell = document.createElement('th');
-	var elCellTextNode = document.createTextNode(strItem);
-	elCell.appendChild(elCellTextNode);
+    this.addHeader = function(oHeaderData) {
+        // Here we should validate the JSON Schema.
+        
+        // Create Table Body Rows
+        for (var i = 0; i < oHeaderData.total; i++) {
+            var oHeadItem = oHeaderData.results[i];
+            var elCell = document.createElement('th');
+            var elCellTextNode = document.createTextNode(oHeadItem.nodeText);
+            
+            elCell.appendChild(elCellTextNode);
 
-	this.aryTblHeadCells.push(elCell);
+            this.aryTblHeadCells.push(elCell);        
+        }
+        
+        return true;
+    };
+
+    this.addRows = function(oRowData) {
+	var elRow = document.createElement('tr');
+	var aryRowClone = aryRow.slice(0);
+	var oRowOptions = aryRowClone.pop();
+
+	/**
+	 * If multiple select is enabled attach a new cell to body row
+	 * and attach a DOM checkbox element to the cell.
+	 */
+	if (this.optionsMultiSelect.enabled) {
+	    var elCellChk = document.createElement('td');
+	    elCellChk.className = this.optionsMultiSelect.bodyRowCellClass;
+
+	    var elChk = document.createElement('input');
+
+	    elChk.type = "checkbox";
+	    elChk.id = oRowOptions.id;
+	    elChk.name = oRowOptions.name;
+	    elChk.value = oRowOptions.value;
+	    elChk.checked = oRowOptions.checked;
+	   
+	    elCellChk.appendChild(elChk);
+	    elRow.appendChild(elCellChk);
+	}
+
+	for (var item in aryRowClone) {
+	    var elCell = document.createElement('td');
+	    var elCellTextNode = document.createTextNode(aryRowClone[item]);
+
+	    elCell.appendChild(elCellTextNode);
+	    elRow.appendChild(elCell);
+	}
 	
-	return true;
+	this.aryTblRows.push(elRow);
+	
+	return true;        
     };
 
     /**
