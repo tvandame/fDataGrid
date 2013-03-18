@@ -10,7 +10,7 @@
             <form>
                 <fieldset>
                    <span>
-                        <select id="selCircles">
+                        <select id="selCircles" name="selCircles">
                             <option value="NULL">Select A Circle</option>
                             <option value="friends">Friends</option>
                             <option value="family">Family</option>
@@ -30,177 +30,74 @@
                 <div id="divDataTable_2" style="margin: 10px; width: 100%;"></div>
             </fieldset>
         </div>
+        <script type="text/javascript" src="data/example.js"></script>        
         <script type="text/javascript" src="js/libs/fDataGrid.js"></script>
         <script>
         // Set Refrence To Utilized DOM Elements
         var elCircles = document.getElementById('selCircles');
         var elLoadButton = document.getElementById('btnLoadGrid');
-
-        var oDataGridHeader = {
-               "total":2,
-               "columns": ["id","fname","lname"], 
-               "results": [
-                   {"id":1, "nodeText":"First Name"},
-                   {"id":2, "nodeText":"Last Name"}
-               ],
-               "summary": "Data Grid Header",
-               "caption": "Example Data Grid One"
-           };    
-   
-        var oData = {
-            "description": "Circles JSON Schema",
-            "type": "object",
-            "properties":
-                    {
-                        "friends": [
-                            [
-                                "jon_1",
-                                "doe_1",
-                                {
-                                    "id": "1",
-                                    "name": "1",
-                                    "style": "",
-                                    "value": "friends::1",
-                                    "checked": true
-                                }
-                            ],
-                            [
-                                "jon_2",
-                                "doe_2",
-                                {
-                                    "id": "2",
-                                    "name": "2",
-                                    "style": "",
-                                    "value": "friends::2",
-                                    "checked": true
-                                }
-                            ],
-                            [
-                                "jon_3",
-                                "doe_3",
-                                {
-                                    "id": "3",
-                                    "name": "3",
-                                    "style": "",
-                                    "value": "friends::3",
-                                    "checked": true
-                                }
-                            ],
-                            [
-                                "jon_4",
-                                "doe_4",
-                                {
-                                    "id": "4",
-                                    "name": "4",
-                                    "style": "",
-                                    "value": "friends::4",
-                                    "checked": true
-                                }
-                            ]
-                        ],
-                        "family": [
-                            [
-                                "jon_5",
-                                "doe_5",
-                                {
-                                    "id": "5",
-                                    "name": "1",
-                                    "style": "",
-                                    "value": "family::1",
-                                    "checked": false
-                                }
-                            ],
-                            [
-                                "jon_6",
-                                "doe_6",
-                                {
-                                    "id": "6",
-                                    "name": "2",
-                                    "style": "",
-                                    "value": "family::2",
-                                    "checked": false
-                                }
-                            ],
-                            [
-                                "jon_7",
-                                "doe_7",
-                                {
-                                    "id": "7",
-                                    "name": "3",
-                                    "style": "",
-                                    "value": "family::3",
-                                    "checked": false
-                                }
-                            ],
-                            [
-                                "jon_8",
-                                "doe_8",
-                                {
-                                    "id": "8",
-                                    "name": "4",
-                                    "style": "",
-                                    "value": "family::4",
-                                    "checked": false
-                                }
-                            ]
-                        ]
-                    }
-        };
-  
-
-  
+        
+        /**
+         * @name getDataGrid
+         * @description Display Data Grid.
+         * @returns {true}
+         */
         function getDataGrid() {
+            // Set selected circle data
             var strCirclesValue = elCircles.options[elCircles.selectedIndex].value;
         
-            // Create Example One
+            // Create Example One Data Grid Object
             var oDataGrid_1 = new fDataGrid("divDataTable_1");
 
-            // Set Table Attributes
+            // Set Table Id
             oDataGrid_1.setId("data_1");
+            // Set Table Name
             oDataGrid_1.setName("data_1");
-            oDataGrid_1.setClass("datatable");
-
+            // Set Table Class
+            oDataGrid_1.setClass("datatable_1");
             // Add Data Grid Caption
             oDataGrid_1.addCaption("Data Grid Example One");
-
             // Enable Multiple Select Option
             oDataGrid_1.optionsMultiSelect.enabled = true;
-
+            // Set Multi Select Head Row Cell Text
+            oDataGrid_1.optionsMultiSelect.headRowCellTitle = "Select";
+            // Set Multi Select Row Cells Class
+            oDataGrid_1.optionsMultiSelect.bodyRowCellClass = "selectinput";
             // Add Data Grid Header Items
             oDataGrid_1.addHeader(oDataGridHeader);
-
             // Create Table Body Rows
-            for (var kRow in oData.properties[strCirclesValue]) {
-                oDataGrid_1.addRow(oData.properties[strCirclesValue][kRow]);
-            }
-
+            oDataGrid_1.addRows(oData.properties[strCirclesValue]);
+            // Initialize Data Grid
             oDataGrid_1.init();
             
-            // Create Eample Two
+            // Create Eample Two Data Grid Object
             var oDataGrid_2 = new fDataGrid("divDataTable_2");
 
-            // Set Table Attributes
+            // Set Table Id
             oDataGrid_2.setId("data_2");
+            // Set Table Name
             oDataGrid_2.setName("data_2");
-            oDataGrid_2.setClass("datatable");
-
+            // Set Table Class
+            oDataGrid_2.setClass("datatable_2");
             // Add Data Grid Caption
             oDataGrid_2.addCaption("Data Grid Example Two");
-            
             // Enable Multiple Select Option
             oDataGrid_2.optionsMultiSelect.enabled = false;
-            
+            // Set Multi Select Head Row Cell Text
+            oDataGrid_2.optionsMultiSelect.headRowCellTitle = "Select";
+            // Set Multi Select Row Cells Class
+            oDataGrid_2.optionsMultiSelect.bodyRowCellClass = "selectinput";            
             // Add Data Grid Header Items
             oDataGrid_2.addHeader(oDataGridHeader);
-
             // Create Table Body Rows
-            for (var kRow in oData.properties[strCirclesValue]) {
-                oDataGrid_2.addRow(oData.properties[strCirclesValue][kRow]);
-            }
-
-            oDataGrid_2.init();            
+            oDataGrid_2.addRows(oData.properties[strCirclesValue]);
+            // Initialize Data Grid
+            oDataGrid_2.init();
+            
+            return true;
         }
 
+        // Build Data Grid with selected circle data
         elLoadButton.addEventListener("click", function () {
             getDataGrid();
         });                     

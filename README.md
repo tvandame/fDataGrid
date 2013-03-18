@@ -8,55 +8,68 @@ coding fun!
 
 See fDataGrid in action over at jsFiddle http://jsfiddle.net/tvandame/Jh7HQ/
 
-Example Configuration
+Example Data Schema
 =============================================================================
 ```javascript
-var oDataGrid = new fDataGrid("someDivId");
-
- // Set Table Attributes
-oDataGrid.setId("dataGridId");
-oDataGrid.setName("DataGrid");
-oDataGrid.setClass("someclass");
-
-// Add Data Grid Caption
-oDataGrid.addCaption("Simple Data Grid Example");
-
-// Enable Multiple Select Option
-// This will provide you with a checkbox next to each row
-// false = no checkboxes / true = checkboxes
-oDataGrid_1.optionsMultiSelect.enabled = true; 
-
-// Example JSON Header Data
 var oDataGridHeader = {
+       "type":"object",
        "total":2,
        "columns": ["id","fname","lname"], 
        "results": [
-           {"id":1, "nodeText":"First Name"},
-           {"id":2, "nodeText":"Last Name"}
+           {"id":"fdg_head_1", "nodeText":"First Name"},
+           {"id":"fdg_head_2", "nodeText":"Last Name"}
        ],
        "summary": "Data Grid Header",
-       "caption": "Example Data Grid One"
-   }; 
+       "caption": "Example Data Grid Header One"
+   };
 
-// Add Data Grid Header Items
-oDataGrid.addHeader(oDataGridHeader);
-
-// Example JSON Row Data
-var oData = [ // Array
-        "jon",  // Head Cell 1 Row Data
-        "doe", // Head Cell 2 Row Data
-        { // Object For Row Options
+var oData = [
+        "jon_1",
+        "doe_1",
+        {
             "id": "1",
             "name": "1",
-            "style": "",
+            "class": "chkbox",
             "value": "friends::1",
             "checked": true
         }
+    ],
+    [
+        "jon_2",
+        "doe_2",
+        {
+            "id": "2",
+            "name": "2",
+            "class": "chkbox",
+            "value": "friends::2",
+            "checked": false
+        }
     ]
+```
 
- // Create Table Body Rows Using JSON Example Data Listed Above
-oDataGrid.addRow(oData);
-
-// Display Data Grid In Assigned Container
-oDataGrid_1.init();
+Example Data Grid Configuration
+=============================================================================
+```javascript
+// Create Eample Two Data Grid Object
+var oDataGrid_2 = new fDataGrid("divDataTable_2");
+// Set Table Id
+oDataGrid_2.setId("data_2");
+// Set Table Name
+oDataGrid_2.setName("data_2");
+// Set Table Class
+oDataGrid_2.setClass("datatable_2");
+// Add Data Grid Caption
+oDataGrid_2.addCaption("Data Grid Example Two");
+// Enable Multiple Select Option
+oDataGrid_2.optionsMultiSelect.enabled = false;
+// Set Multi Select Head Row Cell Text
+oDataGrid_2.optionsMultiSelect.headRowCellTitle = "Select";
+// Set Multi Select Row Cells Class
+oDataGrid_2.optionsMultiSelect.bodyRowCellClass = "selectinput";            
+// Add Data Grid Header Items
+oDataGrid_2.addHeader(oDataGridHeader);
+// Create Table Body Rows
+oDataGrid_2.addRows(oData.properties[strCirclesValue]);
+// Initialize Data Grid
+oDataGrid_2.init();
 ```

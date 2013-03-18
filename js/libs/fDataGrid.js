@@ -155,45 +155,48 @@ function fDataGrid(strContainer) {
     };
 
     /**
-     * @name addrRow
-     * @description Add row to data grid.
-     * @param {array} aryRow
+     * @name addrRows
+     * @description Add rows to data grid.
+     * @param {array} aryRows
      * @returns {true}
      */
-    this.addRow = function(aryRow) {
-	var elRow = document.createElement('tr');
-	var aryRowClone = aryRow.slice(0);
-	var oRowOptions = aryRowClone.pop();
+    this.addRows = function(aryRows) {
+        for (var row in aryRows) {
+            var elRow = document.createElement('tr');
+            var aryRowClone = aryRows[row].slice(0);
+            var oRowOptions = aryRowClone.pop();
+            
+            /**
+             * If multiple select is enabled attach a new cell to body row
+             * and attach a DOM checkbox element to the cell.
+             */
+            if (this.optionsMultiSelect.enabled) {
+                var elCellChk = document.createElement('td');
+                elCellChk.className = this.optionsMultiSelect.bodyRowCellClass;
 
-	/**
-	 * If multiple select is enabled attach a new cell to body row
-	 * and attach a DOM checkbox element to the cell.
-	 */
-	if (this.optionsMultiSelect.enabled) {
-	    var elCellChk = document.createElement('td');
-	    elCellChk.className = this.optionsMultiSelect.bodyRowCellClass;
+                var elChk = document.createElement('input');
 
-	    var elChk = document.createElement('input');
+                elChk.type = "checkbox";
+                elChk.id = oRowOptions.id;
+                elChk.name = oRowOptions.name;
+                elChk.className = oRowOptions.class;
+                elChk.value = oRowOptions.value;
+                elChk.checked = oRowOptions.checked;
 
-	    elChk.type = "checkbox";
-	    elChk.id = oRowOptions.id;
-	    elChk.name = oRowOptions.name;
-	    elChk.value = oRowOptions.value;
-	    elChk.checked = oRowOptions.checked;
-	   
-	    elCellChk.appendChild(elChk);
-	    elRow.appendChild(elCellChk);
-	}
+                elCellChk.appendChild(elChk);
+                elRow.appendChild(elCellChk);
+            }            
+            
+            for (var item in aryRowClone) {
+                var elCell = document.createElement('td');
+                var elCellTextNode = document.createTextNode(aryRowClone[item]);
 
-	for (var item in aryRowClone) {
-	    var elCell = document.createElement('td');
-	    var elCellTextNode = document.createTextNode(aryRowClone[item]);
+                elCell.appendChild(elCellTextNode);
+                elRow.appendChild(elCell);
+            }
 
-	    elCell.appendChild(elCellTextNode);
-	    elRow.appendChild(elCell);
-	}
-	
-	this.aryTblRows.push(elRow);
+            this.aryTblRows.push(elRow);
+        }        
 	
 	return true;
     };
