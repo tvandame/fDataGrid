@@ -1,4 +1,4 @@
-/** Top level namespace **/
+/** @namespace Top level namespace **/
 var App = App || {};
 
 /**
@@ -6,6 +6,7 @@ var App = App || {};
  * namespaces.
  * 
  * @param ns_string
+ * @returns string
  */
 App.namespace = function(ns_string) {
     var parts = ns_string.split('.'),
