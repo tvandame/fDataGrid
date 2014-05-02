@@ -29,3 +29,5 @@ App.namespace = function(ns_string) {
     
     return parent;
 };
+
+App.namespace('App.model');
